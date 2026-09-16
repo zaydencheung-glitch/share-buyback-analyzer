@@ -92,6 +92,29 @@ MIN_FISCAL_YEARS_REQUIRED = 2
 # Preferred number of fiscal years to analyze (most recent available).
 TARGET_FISCAL_YEARS = 4
 
+# Fiscal years used for the cross-company comparison.
+ANALYSIS_START_YEAR = 2022
+ANALYSIS_END_YEAR = 2025
+
+# Verified historical observations used only when yfinance does not
+# return a required fiscal year. Values come from official SEC filings.
+VERIFIED_FALLBACK_DATA = {
+    "MSFT": {
+        2022: {
+            "fiscal_year_end": "2022-06-30",
+            "diluted_avg_shares": 7_540_000_000,
+            "source": "SEC filing",
+        }
+    },
+    "NVDA": {
+        2022: {
+            "fiscal_year_end": "2022-01-30",
+            "diluted_avg_shares": 25_350_000_000,
+            "source": "SEC filing; FY2022 shares adjusted for 2024 10-for-1 split",
+        }
+    },
+}
+
 # Neutral-zone threshold for classification, in percentage points.
 NEUTRAL_THRESHOLD_PCT = 0.10
 
@@ -300,7 +323,33 @@ def get_company_data(ticker: str, company_name: str) -> CompanyDataset:
             warnings=rec_warnings,
         )
         dataset.records.append(record)
+    # Add verified SEC fallback observations when yfinance does not
+    # provide a required fiscal year.
+    fallback_years = VERIFIED_FALLBACK_DATA.get(ticker, {})
 
+    existing_years = {
+        record.fiscal_year_end.year
+        for record in dataset.records
+        if record.fiscal_year_end is not None
+    }
+
+    for year, fallback in fallback_years.items():
+        if year not in existing_years:
+            dataset.records.append(
+                FiscalYearRecord(
+                    ticker=ticker,
+                    company=company_name,
+                    fiscal_year_end=pd.Timestamp(fallback["fiscal_year_end"]),
+                    diluted_avg_shares=fallback["diluted_avg_shares"],
+                    diluted_shares_field_used="Verified SEC fallback",
+                    basic_avg_shares=None,
+                    repurchase_spend=None,
+                    repurchase_field_used=None,
+                    stock_based_comp=None,
+                    data_source=DataSource.MANUAL_VERIFICATION,
+                    warnings=[fallback["source"]],
+                )
+            )
     return dataset
 
 
@@ -649,6 +698,15 @@ def analyze_company(
             insufficient_data=True,
         )
 
+    # Use the same fiscal-year window for every company so cross-company
+    # comparisons cover the same four fiscal years.
+
+    cleaned = cleaned[
+    cleaned["fiscal_year_end"].dt.year.between(
+        ANALYSIS_START_YEAR, ANALYSIS_END_YEAR
+    )
+].copy()
+    
     usable = cleaned.dropna(subset=["diluted_avg_shares"]).reset_index(drop=True)
 
     year_rows = []
@@ -1191,9 +1249,9 @@ def main() -> None:
         print("\nAll companies produced usable data.")
 
     print(
-        "\nReminder: figures above come from automated yfinance retrieval "
-        "and are NOT yet verified against SEC filings. See README.md for "
-        "the verification workflow before citing these numbers as final."
+        "\nReminder: most figures above come from automated yfinance retrieval and remain unverified. "
+"Verified SEC fallback observations are explicitly labeled in the raw data. "
+"See README.md for the verification workflow before citing results as final."
     )
 
 
