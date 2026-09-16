@@ -8,12 +8,12 @@ Microsoft,MSFT,2025-06-30,7465000000.0,7469000000.0,4000000.0,0.0536,Flat / Neut
 Meta Platforms,META,2023-12-31,2629000000.0,2702000000.0,73000000.0,2.7017,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
 Meta Platforms,META,2024-12-31,2614000000.0,2629000000.0,15000000.0,0.5706,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
 Meta Platforms,META,2025-12-31,2574000000.0,2614000000.0,40000000.0,1.5302,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Tesla,TSLA,2023-12-31,3482750000.0,3475000000.0,-7750000.0,-0.223,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
-Tesla,TSLA,2024-12-31,3216000000.0,3482750000.0,266750000.0,7.6592,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Tesla,TSLA,2025-12-31,3526250000.0,3216000000.0,-310250000.0,-9.6471,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
-Palantir Technologies,PLTR,2023-12-31,2294577862.0,2060785103.0,-233792759.0,-11.3448,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
-Palantir Technologies,PLTR,2024-12-31,2447246030.0,2294577862.0,-152668168.0,-6.6534,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
-Palantir Technologies,PLTR,2025-12-31,2565197000.0,2447246030.0,-117950970.0,-4.8197,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
+Tesla,TSLA,2023-12-31,3485000000.0,3475000000.0,-10000000.0,-0.2878,Net Dilution,Manually entered / verified by user
+Tesla,TSLA,2024-12-31,3498000000.0,3485000000.0,-13000000.0,-0.373,Net Dilution,Manually entered / verified by user
+Tesla,TSLA,2025-12-31,3528000000.0,3498000000.0,-30000000.0,-0.8576,Net Dilution,Manually entered / verified by user
+Palantir Technologies,PLTR,2023-12-31,2297927000.0,2063793000.0,-234134000.0,-11.3448,Net Dilution,Manually entered / verified by user
+Palantir Technologies,PLTR,2024-12-31,2450818000.0,2297927000.0,-152891000.0,-6.6534,Net Dilution,Manually entered / verified by user
+Palantir Technologies,PLTR,2025-12-31,2565197000.0,2450818000.0,-114379000.0,-4.667,Net Dilution,Manually entered / verified by user
 Alphabet,GOOGL,2023-12-31,12722000000.0,13159000000.0,437000000.0,3.3209,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
 Alphabet,GOOGL,2024-12-31,12447000000.0,12722000000.0,275000000.0,2.1616,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
 Alphabet,GOOGL,2025-12-31,12230000000.0,12447000000.0,217000000.0,1.7434,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"

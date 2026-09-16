@@ -113,6 +113,50 @@ VERIFIED_FALLBACK_DATA = {
             "source": "SEC filing; FY2022 shares adjusted for 2024 10-for-1 split",
         }
     },
+    "TSLA": {
+        2022: {
+            "fiscal_year_end": "2022-12-31",
+            "diluted_avg_shares": 3_475_000_000,
+            "source": "Tesla FY2024 Form 10-K (SEC)",
+        },
+        2023: {
+            "fiscal_year_end": "2023-12-31",
+            "diluted_avg_shares": 3_485_000_000,
+            "source": "Tesla FY2024 Form 10-K (SEC)",
+        },
+        2024: {
+            "fiscal_year_end": "2024-12-31",
+            "diluted_avg_shares": 3_498_000_000,
+            "source": "Tesla FY2024 Form 10-K (SEC)",
+        },
+        2025: {
+            "fiscal_year_end": "2025-12-31",
+            "diluted_avg_shares": 3_528_000_000,
+            "source": "Tesla FY2025 Form 10-K (SEC)",
+        },
+    },
+    "PLTR": {
+        2022: {
+            "fiscal_year_end": "2022-12-31",
+            "diluted_avg_shares": 2_063_793_000,
+            "source": "Palantir FY2024 Form 10-K (SEC)",
+        },
+        2023: {
+            "fiscal_year_end": "2023-12-31",
+            "diluted_avg_shares": 2_297_927_000,
+            "source": "Palantir FY2024 Form 10-K (SEC)",
+        },
+        2024: {
+            "fiscal_year_end": "2024-12-31",
+            "diluted_avg_shares": 2_450_818_000,
+            "source": "Palantir FY2024 Form 10-K (SEC)",
+        },
+        2025: {
+            "fiscal_year_end": "2025-12-31",
+            "diluted_avg_shares": 2_565_197_000,
+            "source": "Palantir FY2025 Form 10-K (SEC)",
+        },
+    },
 }
 
 # Neutral-zone threshold for classification, in percentage points.
@@ -323,33 +367,47 @@ def get_company_data(ticker: str, company_name: str) -> CompanyDataset:
             warnings=rec_warnings,
         )
         dataset.records.append(record)
-    # Add verified SEC fallback observations when yfinance does not
-    # provide a required fiscal year.
-    fallback_years = VERIFIED_FALLBACK_DATA.get(ticker, {})
+       # Apply verified SEC observations.
+    # If yfinance already returned the year, replace only the verified
+    # diluted share count while preserving other automatically retrieved fields.
+    # If the year is missing entirely, add it as a verified observation.
+    verified_years = VERIFIED_FALLBACK_DATA.get(ticker, {})
 
-    existing_years = {
-        record.fiscal_year_end.year
-        for record in dataset.records
-        if record.fiscal_year_end is not None
-    }
+    for year, verified in verified_years.items():
+        matching_record = next(
+            (
+                record
+                for record in dataset.records
+                if record.fiscal_year_end is not None
+                and record.fiscal_year_end.year == year
+            ),
+            None,
+        )
 
-    for year, fallback in fallback_years.items():
-        if year not in existing_years:
+        if matching_record is not None:
+            matching_record.diluted_avg_shares = verified["diluted_avg_shares"]
+            matching_record.diluted_shares_field_used = "Verified SEC override"
+            matching_record.data_source = DataSource.MANUAL_VERIFICATION
+            matching_record.warnings.append(verified["source"])
+
+        else:
             dataset.records.append(
                 FiscalYearRecord(
                     ticker=ticker,
                     company=company_name,
-                    fiscal_year_end=pd.Timestamp(fallback["fiscal_year_end"]),
-                    diluted_avg_shares=fallback["diluted_avg_shares"],
+                    fiscal_year_end=pd.Timestamp(verified["fiscal_year_end"]),
+                    diluted_avg_shares=verified["diluted_avg_shares"],
                     diluted_shares_field_used="Verified SEC fallback",
                     basic_avg_shares=None,
                     repurchase_spend=None,
                     repurchase_field_used=None,
                     stock_based_comp=None,
                     data_source=DataSource.MANUAL_VERIFICATION,
-                    warnings=[fallback["source"]],
+                    warnings=[verified["source"]],
                 )
             )
+
+    return dataset
     return dataset
 
 
@@ -1250,7 +1308,7 @@ def main() -> None:
 
     print(
         "\nReminder: most figures above come from automated yfinance retrieval and remain unverified. "
-"Verified SEC fallback observations are explicitly labeled in the raw data. "
+"Verified SEC observations are explicitly labeled in the raw data. "
 "See README.md for the verification workflow before citing results as final."
     )
 
