@@ -367,11 +367,11 @@ The automated dataset is being checked against official SEC filings before the r
 
 | Alphabet (GOOGL) | Verified | FY2022–FY2025 diluted weighted-average shares verified against official SEC filings; all four observations match the automated data. |
 
-| Amazon (AMZN) | Pending | SEC verification not yet completed. |
+| Amazon (AMZN) | Verified | FY2022–FY2025 diluted weighted-average shares verified against official SEC filings; all four observations match the automated data. |
 
-| JPMorgan Chase (JPM) | Pending | SEC verification not yet completed. |
+| JPMorgan Chase (JPM) | Verified | FY2022–FY2025 diluted weighted-average shares verified against official SEC filings; all four observations match the automated data. |
 
-| Costco (COST) | Pending | SEC verification not yet completed. |
+| Costco (COST) | Verified | FY2022–FY2025 diluted weighted-average shares verified against official SEC filings; all four observations match the automated data. |
 
 
 
