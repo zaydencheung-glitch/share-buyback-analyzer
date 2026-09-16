@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+GOOGL,Alphabet,2022-12-31,13159000000.0,Diluted Average Shares,13063000000.0,59296000000.0,Repurchase Of Capital Stock,19362000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+GOOGL,Alphabet,2023-12-31,12722000000.0,Diluted Average Shares,12630000000.0,61504000000.0,Repurchase Of Capital Stock,22460000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+GOOGL,Alphabet,2024-12-31,12447000000.0,Diluted Average Shares,12319000000.0,62222000000.0,Repurchase Of Capital Stock,22785000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+GOOGL,Alphabet,2025-12-31,12230000000.0,Diluted Average Shares,12116000000.0,45709000000.0,Repurchase Of Capital Stock,24953000000.0,"Yahoo Finance / yfinance (automated, unverified)",

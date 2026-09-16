@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+NVDA,NVIDIA,2023-01-31,25070000000.0,Diluted Average Shares,24870000000.0,10039000000.0,Repurchase Of Capital Stock,2709000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+NVDA,NVIDIA,2024-01-31,24940000000.0,Diluted Average Shares,24690000000.0,9533000000.0,Repurchase Of Capital Stock,3549000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+NVDA,NVIDIA,2025-01-31,24804000000.0,Diluted Average Shares,24555000000.0,33706000000.0,Repurchase Of Capital Stock,4737000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+NVDA,NVIDIA,2026-01-31,24514000000.0,Diluted Average Shares,24359000000.0,40086000000.0,Repurchase Of Capital Stock,6386000000.0,"Yahoo Finance / yfinance (automated, unverified)",

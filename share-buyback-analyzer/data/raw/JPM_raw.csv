@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+JPM,JPMorgan Chase,2022-12-31,2970000000.0,Diluted Average Shares,2965800000.0,10596000000.0,Repurchase Of Capital Stock,,"Yahoo Finance / yfinance (automated, unverified)",
+JPM,JPMorgan Chase,2023-12-31,2943100000.0,Diluted Average Shares,2938600000.0,9824000000.0,Repurchase Of Capital Stock,,"Yahoo Finance / yfinance (automated, unverified)",
+JPM,JPMorgan Chase,2024-12-31,2879000000.0,Diluted Average Shares,2873900000.0,28680000000.0,Repurchase Of Capital Stock,,"Yahoo Finance / yfinance (automated, unverified)",
+JPM,JPMorgan Chase,2025-12-31,2781500000.0,Diluted Average Shares,2776500000.0,34591000000.0,Repurchase Of Capital Stock,,"Yahoo Finance / yfinance (automated, unverified)",

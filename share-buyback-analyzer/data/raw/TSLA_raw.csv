@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+TSLA,Tesla,2022-12-31,3475000000.0,Diluted Average Shares,3130000000.0,,,1560000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+TSLA,Tesla,2023-12-31,3482750000.0,Diluted Average Shares,3173500000.0,,,1812000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+TSLA,Tesla,2024-12-31,3216000000.0,Diluted Average Shares,3216000000.0,,,1999000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+TSLA,Tesla,2025-12-31,3526250000.0,Diluted Average Shares,3224750000.0,,,2825000000.0,"Yahoo Finance / yfinance (automated, unverified)",

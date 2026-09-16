@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+META,Meta Platforms,2022-12-31,2702000000.0,Diluted Average Shares,2687000000.0,27956000000.0,Repurchase Of Capital Stock,11992000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+META,Meta Platforms,2023-12-31,2629000000.0,Diluted Average Shares,2574000000.0,19774000000.0,Repurchase Of Capital Stock,14027000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+META,Meta Platforms,2024-12-31,2614000000.0,Diluted Average Shares,2534000000.0,30125000000.0,Repurchase Of Capital Stock,16690000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+META,Meta Platforms,2025-12-31,2574000000.0,Diluted Average Shares,2521000000.0,26248000000.0,Repurchase Of Capital Stock,20427000000.0,"Yahoo Finance / yfinance (automated, unverified)",

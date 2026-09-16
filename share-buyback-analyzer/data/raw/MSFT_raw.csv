@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+MSFT,Microsoft,2023-06-30,7472000000.0,Diluted Average Shares,7446000000.0,22245000000.0,Repurchase Of Capital Stock,9611000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+MSFT,Microsoft,2024-06-30,7469000000.0,Diluted Average Shares,7431000000.0,17254000000.0,Repurchase Of Capital Stock,10734000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+MSFT,Microsoft,2025-06-30,7465000000.0,Diluted Average Shares,7433000000.0,18420000000.0,Repurchase Of Capital Stock,11974000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+MSFT,Microsoft,2026-06-30,7453000000.0,Diluted Average Shares,7429000000.0,22271000000.0,Repurchase Of Capital Stock,12405000000.0,"Yahoo Finance / yfinance (automated, unverified)",

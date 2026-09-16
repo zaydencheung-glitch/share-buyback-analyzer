@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+PLTR,Palantir Technologies,2022-12-31,2060785103.0,Diluted Average Shares,2060785103.0,0.0,Repurchase Of Capital Stock,564798000.0,"Yahoo Finance / yfinance (automated, unverified)",
+PLTR,Palantir Technologies,2023-12-31,2294577862.0,Diluted Average Shares,2144316182.0,0.0,Repurchase Of Capital Stock,475903000.0,"Yahoo Finance / yfinance (automated, unverified)",
+PLTR,Palantir Technologies,2024-12-31,2447246030.0,Diluted Average Shares,2246883476.0,64196000.0,Repurchase Of Capital Stock,691638000.0,"Yahoo Finance / yfinance (automated, unverified)",
+PLTR,Palantir Technologies,2025-12-31,2565197000.0,Diluted Average Shares,2369612000.0,74985000.0,Repurchase Of Capital Stock,684033000.0,"Yahoo Finance / yfinance (automated, unverified)",

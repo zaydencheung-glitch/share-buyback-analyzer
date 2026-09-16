@@ -1,0 +1,5 @@
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
+AAPL,Apple,2022-09-30,16325819000.0,Diluted Average Shares,16215963000.0,89402000000.0,Repurchase Of Capital Stock,9038000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+AAPL,Apple,2023-09-30,15812547000.0,Diluted Average Shares,15744231000.0,77550000000.0,Repurchase Of Capital Stock,10833000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+AAPL,Apple,2024-09-30,15408095000.0,Diluted Average Shares,15343783000.0,94949000000.0,Repurchase Of Capital Stock,11688000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+AAPL,Apple,2025-09-30,15004697000.0,Diluted Average Shares,14948500000.0,90711000000.0,Repurchase Of Capital Stock,12863000000.0,"Yahoo Finance / yfinance (automated, unverified)",
