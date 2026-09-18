@@ -1,5 +1,5 @@
-ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
-COST,Costco,2022-08-31,444757000.0,Diluted Average Shares,443651000.0,439000000.0,Repurchase Of Capital Stock,724000000.0,"Yahoo Finance / yfinance (automated, unverified)",
-COST,Costco,2023-08-31,444452000.0,Diluted Average Shares,443854000.0,676000000.0,Repurchase Of Capital Stock,774000000.0,"Yahoo Finance / yfinance (automated, unverified)",
-COST,Costco,2024-08-31,444759000.0,Diluted Average Shares,443914000.0,700000000.0,Repurchase Of Capital Stock,818000000.0,"Yahoo Finance / yfinance (automated, unverified)",
-COST,Costco,2025-08-31,444803000.0,Diluted Average Shares,443985000.0,903000000.0,Repurchase Of Capital Stock,860000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,verification_status,record_warnings
+COST,Costco,2022-08-31,444757000.0,Diluted Average Shares,443651000.0,439000000.0,Repurchase Of Capital Stock,724000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,
+COST,Costco,2023-08-31,444452000.0,Diluted Average Shares,443854000.0,676000000.0,Repurchase Of Capital Stock,774000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,
+COST,Costco,2024-08-31,444759000.0,Diluted Average Shares,443914000.0,700000000.0,Repurchase Of Capital Stock,818000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,
+COST,Costco,2025-08-31,444803000.0,Diluted Average Shares,443985000.0,903000000.0,Repurchase Of Capital Stock,860000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,

@@ -3,8 +3,8 @@ Share Buyback Analyzer
 =======================
 
 Research question:
-    Do corporate share buybacks result in a lower diluted average share
-    count after the effects of share issuance and dilution?
+Are corporate share buybacks associated with lower diluted average
+share counts after the effects of share issuance and dilution?
 
 This program measures the *net* change in diluted average shares
 outstanding, year over year, for a configurable list of companies.
@@ -98,7 +98,7 @@ ANALYSIS_END_YEAR = 2025
 
 # Verified historical observations used only when yfinance does not
 # return a required fiscal year. Values come from official SEC filings.
-VERIFIED_FALLBACK_DATA = {
+VERIFIED_DILUTED_SHARE_DATA = {
     "MSFT": {
         2022: {
             "fiscal_year_end": "2022-06-30",
@@ -159,6 +159,21 @@ VERIFIED_FALLBACK_DATA = {
     },
 }
 
+# Fiscal years whose diluted weighted-average share counts have been
+# independently checked against official SEC filings.
+SEC_VERIFIED_YEARS = {
+    "AAPL": {2022, 2023, 2024, 2025},
+    "MSFT": {2022, 2023, 2024, 2025},
+    "META": {2022, 2023, 2024, 2025},
+    "TSLA": {2022, 2023, 2024, 2025},
+    "PLTR": {2022, 2023, 2024, 2025},
+    "GOOGL": {2022, 2023, 2024, 2025},
+    "AMZN": {2022, 2023, 2024, 2025},
+    "NVDA": {2022, 2023, 2024, 2025},
+    "JPM": {2022, 2023, 2024, 2025},
+    "COST": {2022, 2023, 2024, 2025},
+}
+
 # Neutral-zone threshold for classification, in percentage points.
 NEUTRAL_THRESHOLD_PCT = 0.10
 
@@ -176,7 +191,7 @@ REPORTS_DIR = BASE_DIR / "reports"
 
 class DataSource(str, Enum):
     """Where a given figure came from. Used for transparency/audit."""
-    YFINANCE = "Yahoo Finance / yfinance (automated, unverified)"
+    YFINANCE = "Yahoo Finance / yfinance"
     SEC_FILING = "SEC EDGAR filing (primary source, verified)"
     ANNUAL_REPORT = "Company annual report (primary source, verified)"
     MANUAL_VERIFICATION = "Manually entered / verified by user"
@@ -237,6 +252,7 @@ class FiscalYearRecord:
     repurchase_field_used: Optional[str]
     stock_based_comp: Optional[float]
     data_source: DataSource
+    verification_status: str = "Unverified"
     warnings: list[str] = field(default_factory=list)
 
 
@@ -366,12 +382,19 @@ def get_company_data(ticker: str, company_name: str) -> CompanyDataset:
             data_source=DataSource.YFINANCE,
             warnings=rec_warnings,
         )
+
+        if (
+            period_ts is not None
+            and period_ts.year in SEC_VERIFIED_YEARS.get(ticker, set())
+        ):
+            record.verification_status = "SEC Verified - Diluted Shares"
+
         dataset.records.append(record)
        # Apply verified SEC observations.
     # If yfinance already returned the year, replace only the verified
     # diluted share count while preserving other automatically retrieved fields.
     # If the year is missing entirely, add it as a verified observation.
-    verified_years = VERIFIED_FALLBACK_DATA.get(ticker, {})
+    verified_years = VERIFIED_DILUTED_SHARE_DATA.get(ticker, {})
 
     for year, verified in verified_years.items():
         matching_record = next(
@@ -387,7 +410,8 @@ def get_company_data(ticker: str, company_name: str) -> CompanyDataset:
         if matching_record is not None:
             matching_record.diluted_avg_shares = verified["diluted_avg_shares"]
             matching_record.diluted_shares_field_used = "Verified SEC override"
-            matching_record.data_source = DataSource.MANUAL_VERIFICATION
+            matching_record.data_source = DataSource.SEC_FILING
+            matching_record.verification_status = "SEC Verified - Diluted Shares"
             matching_record.warnings.append(verified["source"])
 
         else:
@@ -402,14 +426,13 @@ def get_company_data(ticker: str, company_name: str) -> CompanyDataset:
                     repurchase_spend=None,
                     repurchase_field_used=None,
                     stock_based_comp=None,
-                    data_source=DataSource.MANUAL_VERIFICATION,
+                    data_source=DataSource.SEC_FILING,
+                    verification_status="SEC Verified - Diluted Shares",
                     warnings=[verified["source"]],
                 )
             )
 
     return dataset
-    return dataset
-
 
 def _extract_field(
     df: pd.DataFrame, column: Any, candidate_row_names: list[str]
@@ -474,6 +497,7 @@ def clean_financial_data(dataset: CompanyDataset) -> pd.DataFrame:
                 "repurchase_field_used": rec.repurchase_field_used,
                 "stock_based_comp": rec.stock_based_comp,
                 "data_source": rec.data_source.value,
+		"verification_status": rec.verification_status,
                 "record_warnings": "; ".join(rec.warnings) if rec.warnings else "",
             }
         )
@@ -685,8 +709,6 @@ class CompanyAnalysis:
     best_year: Optional[dict]
     worst_year: Optional[dict]
     overall_classification: ShareChangeStatus
-    effectiveness_score: Optional[float]
-    score_breakdown: Optional[dict]
     data_quality_notes: list[str] = field(default_factory=list)
     insufficient_data: bool = False
 
@@ -750,8 +772,6 @@ def analyze_company(
             best_year=None,
             worst_year=None,
             overall_classification=ShareChangeStatus.INSUFFICIENT_DATA,
-            effectiveness_score=None,
-            score_breakdown=None,
             data_quality_notes=notes + validation.errors,
             insufficient_data=True,
         )
@@ -806,6 +826,7 @@ def analyze_company(
                 "Net Share Reduction Yield %": round(net_yield, 4),
                 "Status": status.value,
                 "Data Source": usable.loc[i, "data_source"],
+		"Verification Status": usable.loc[i, "verification_status"],
             }
         )
 
@@ -824,8 +845,6 @@ def analyze_company(
             best_year=None,
             worst_year=None,
             overall_classification=ShareChangeStatus.INSUFFICIENT_DATA,
-            effectiveness_score=None,
-            score_breakdown=None,
             data_quality_notes=notes + [
                 "No valid consecutive fiscal-year comparisons could be computed."
             ],
@@ -865,14 +884,6 @@ def analyze_company(
         cumulative, years_reduction, years_dilution
     )
 
-    score, breakdown = calculate_effectiveness_score(
-        cumulative_pct_change=cumulative,
-        years_reduction=years_reduction,
-        years_dilution=years_dilution,
-        total_years=len(yearly_table),
-        average_annual_yield_pct=avg_yield,
-    )
-
     return CompanyAnalysis(
         ticker=ticker,
         company=company_name,
@@ -885,8 +896,6 @@ def analyze_company(
         best_year=best_year,
         worst_year=worst_year,
         overall_classification=overall,
-        effectiveness_score=round(score, 2) if score is not None else None,
-        score_breakdown=breakdown,
         data_quality_notes=notes,
     )
 
@@ -919,113 +928,15 @@ def _overall_classification(
         else ShareChangeStatus.NET_DILUTION
     )
 
-
 # =====================================================================
-# STEP 6: SCORING MODEL (OPTIONAL, EXPLICITLY LABELED AS A RESEARCH
-# FRAMEWORK -- NOT AN INDUSTRY STANDARD OR INVESTMENT SIGNAL)
-# =====================================================================
-#
-# "Project Buyback Effectiveness Score" (0-100)
-#
-# Point allocation (matches the prompt's framework, justified below):
-#
-#   40 pts -- cumulative diluted share-count reduction
-#       Rationale: this is the headline research question, so it gets
-#       the largest weight. We scale linearly: a cumulative reduction
-#       of 0% earns 0 of these 40 points, and a cumulative reduction of
-#       20%+ earns the full 40 points (chosen as a plausible upper
-#       bound for a 4-year window based on typical large-cap buyback
-#       programs; NOT derived from a statistical benchmark). Cumulative
-#       dilution (share count increased) earns 0 points here, never
-#       negative -- the scale is 0-40, not a penalty scale, to keep the
-#       overall 0-100 score legible.
-#
-#   25 pts -- consistency of annual share-count reduction
-#       Rationale: a company that reduces share count in most/all years
-#       demonstrates a more reliable capital-return policy than one
-#       with a single large buyback year offsetting several dilutive
-#       years. Scored as (years_with_reduction / total_years) * 25.
-#
-#   20 pts -- average annual net buyback yield
-#       Rationale: distinct from cumulative change -- rewards a
-#       *typical* year's magnitude, not just the endpoints. Scaled
-#       linearly against a 5% average annual yield as a full-credit
-#       reference point (again a project-defined benchmark, not an
-#       industry standard), capped at 20.
-#
-#   15 pts -- absence of persistent net dilution
-#       Rationale: a company that is net-diluting in most years should
-#       not score well even if a couple of metrics above look decent.
-#       Full 15 points if 0 dilutive years; scaled down proportionally
-#       as dilutive years increase, reaching 0 points if dilutive years
-#       are the majority of the analysis window.
-#
-# All four components are non-negative and independent; the maximum
-# possible score is exactly 100. This is a project-defined heuristic
-# for THIS research project only -- it is not a validated financial
-# model, and a high or low score is not investment advice.
-
-CUMULATIVE_REDUCTION_FULL_CREDIT_PCT = 20.0  # cumulative reduction %, for full 40 pts
-AVERAGE_YIELD_FULL_CREDIT_PCT = 5.0  # average annual yield %, for full 20 pts
-
-
-def calculate_effectiveness_score(
-    cumulative_pct_change: Optional[float],
-    years_reduction: int,
-    years_dilution: int,
-    total_years: int,
-    average_annual_yield_pct: float,
-) -> tuple[Optional[float], Optional[dict]]:
-    """
-    Compute the "Project Buyback Effectiveness Score" (0-100). Returns
-    (None, None) if there isn't enough information to score fairly.
-
-    See the module-level comment block above for the full rationale
-    behind each weight and reference benchmark.
-    """
-    if total_years == 0 or cumulative_pct_change is None:
-        return None, None
-
-    # Component 1: cumulative reduction (0-40 pts). Convert to
-    # "reduction-positive" convention first (see _overall_classification).
-    cumulative_reduction_pct = -cumulative_pct_change
-    cumulative_component = 40.0 * np.clip(
-        cumulative_reduction_pct / CUMULATIVE_REDUCTION_FULL_CREDIT_PCT, 0.0, 1.0
-    )
-
-    # Component 2: consistency (0-25 pts).
-    consistency_component = 25.0 * (years_reduction / total_years)
-
-    # Component 3: average annual yield (0-20 pts).
-    yield_component = 20.0 * np.clip(
-        average_annual_yield_pct / AVERAGE_YIELD_FULL_CREDIT_PCT, 0.0, 1.0
-    )
-
-    # Component 4: absence of persistent dilution (0-15 pts).
-    dilution_fraction = years_dilution / total_years
-    dilution_component = 15.0 * np.clip(1.0 - (dilution_fraction / 0.5), 0.0, 1.0)
-
-    total_score = float(
-        cumulative_component + consistency_component + yield_component + dilution_component
-    )
-    breakdown = {
-        "cumulative_reduction_component_of_40": round(float(cumulative_component), 2),
-        "consistency_component_of_25": round(float(consistency_component), 2),
-        "average_yield_component_of_20": round(float(yield_component), 2),
-        "dilution_absence_component_of_15": round(float(dilution_component), 2),
-    }
-    return total_score, breakdown
-
-
-# =====================================================================
-# STEP 7: CROSS-COMPANY COMPARISON
+# STEP 6: CROSS-COMPANY COMPARISON
 # =====================================================================
 
 def compare_companies(analyses: list[CompanyAnalysis]) -> pd.DataFrame:
     """
-    Build the summary/ranking table across all analyzed companies.
-    Companies with insufficient data are still listed (transparently
-    flagged), not silently dropped.
+    Build a summary table across all analyzed companies.
+    Companies with insufficient data are still listed and transparently
+    flagged rather than silently dropped.
     """
     rows = []
     for a in analyses:
@@ -1040,24 +951,25 @@ def compare_companies(analyses: list[CompanyAnalysis]) -> pd.DataFrame:
                 "Years Net Dilution": a.years_net_dilution,
                 "Years Neutral": a.years_neutral,
                 "Overall Classification": a.overall_classification.value,
-                "Project Buyback Effectiveness Score": a.effectiveness_score,
                 "Insufficient Data": a.insufficient_data,
                 "Data Quality Notes": " | ".join(a.data_quality_notes) if a.data_quality_notes else "",
             }
         )
+
     summary = pd.DataFrame(rows)
+
     if not summary.empty:
-        # Rank by score where available; insufficient-data companies sort last.
         summary = summary.sort_values(
-            by=["Insufficient Data", "Project Buyback Effectiveness Score"],
-            ascending=[True, False],
+            by=["Insufficient Data", "Ticker"],
+            ascending=[True, True],
             na_position="last",
         ).reset_index(drop=True)
+
     return summary
 
 
 # =====================================================================
-# STEP 8: CHARTS
+# STEP 7: CHARTS
 # =====================================================================
 
 def generate_charts(
@@ -1165,32 +1077,11 @@ def generate_charts(
     plt.close(fig)
     saved.append(path)
 
-    # 5. Project Buyback Effectiveness Score by Company (only if scored).
-    scored = valid_summary.dropna(subset=["Project Buyback Effectiveness Score"])
-    if not scored.empty:
-        fig, ax = plt.subplots(figsize=(10, 6))
-        ax.bar(scored["Ticker"], scored["Project Buyback Effectiveness Score"], color="#805ad5")
-        ax.set_ylim(0, 100)
-        ax.set_title(
-            "Project Buyback Effectiveness Score by Company\n"
-            "(project-defined research heuristic, NOT an industry standard or investment signal)"
-        )
-        ax.set_xlabel("Company (Ticker)")
-        ax.set_ylabel("Score (0-100)")
-        ax.text(0.01, -0.2, source_note, transform=ax.transAxes, fontsize=7, color="gray")
-        fig.tight_layout()
-        path = output_dir / "05_effectiveness_score_by_company.png"
-        fig.savefig(path, dpi=200)
-        plt.close(fig)
-        saved.append(path)
-    else:
-        print("WARNING: No effectiveness scores available; skipping chart 5.")
-
     return saved
 
 
 # =====================================================================
-# STEP 9: SAVE RESULTS
+# STEP 8: SAVE RESULTS
 # =====================================================================
 
 def save_results(
@@ -1200,7 +1091,7 @@ def save_results(
 ) -> dict[str, Path]:
     """
     Write raw-preserving cleaned data, the combined per-year processed
-    table, and the summary/ranking table to data/processed and
+    table, and the company summary table to data/processed and
     data/raw as CSV files. Returns the paths written.
     """
     RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -1223,7 +1114,7 @@ def save_results(
     combined.to_csv(combined_path, index=False)
     paths["processed_combined"] = combined_path
 
-    summary_path = PROCESSED_DATA_DIR / "company_summary_ranking.csv"
+    summary_path = PROCESSED_DATA_DIR / "company_summary.csv"
     summary.to_csv(summary_path, index=False)
     paths["summary"] = summary_path
 
@@ -1237,8 +1128,8 @@ def save_results(
 def main() -> None:
     print("=" * 70)
     print("SHARE BUYBACK ANALYZER")
-    print("Research question: Do share buybacks result in a lower diluted")
-    print("average share count after the effects of issuance and dilution?")
+    print("Research question: Are corporate share buybacks associated with lower")
+    print("diluted average share counts after the effects of issuance and dilution?")
     print("=" * 70)
 
     if not YFINANCE_AVAILABLE:
@@ -1301,15 +1192,16 @@ def main() -> None:
 
     if failed:
         print(f"\nCompanies with INSUFFICIENT or FAILED data ({len(failed)}): {failed}")
-        print("These are excluded from the ranking's valid rows but are still")
-        print("listed in company_summary_ranking.csv with 'Insufficient Data' = True.")
+        print("These companies are still listed in company_summary.csv")
+        print("with 'Insufficient Data' = True.")
     else:
         print("\nAll companies produced usable data.")
 
     print(
-        "\nReminder: most figures above come from automated yfinance retrieval and remain unverified. "
-"Verified SEC observations are explicitly labeled in the raw data. "
-"See README.md for the verification workflow before citing results as final."
+        "\nReminder: diluted weighted-average share observations for FY2022-FY2025 "
+        "have been checked against official SEC filings as documented in the README. "
+        "Supporting fields retrieved through yfinance, including repurchase spending "
+        "and stock-based compensation, should still be treated as provisional."
     )
 
 

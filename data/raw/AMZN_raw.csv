@@ -1,5 +1,5 @@
-ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
-AMZN,Amazon,2022-12-31,10189000000.0,Diluted Average Shares,10189000000.0,6000000000.0,Repurchase Of Capital Stock,19621000000.0,"Yahoo Finance / yfinance (automated, unverified)",
-AMZN,Amazon,2023-12-31,10492000000.0,Diluted Average Shares,10304000000.0,0.0,Repurchase Of Capital Stock,24023000000.0,"Yahoo Finance / yfinance (automated, unverified)",
-AMZN,Amazon,2024-12-31,10721000000.0,Diluted Average Shares,10473000000.0,0.0,Repurchase Of Capital Stock,22011000000.0,"Yahoo Finance / yfinance (automated, unverified)",
-AMZN,Amazon,2025-12-31,10827000000.0,Diluted Average Shares,10656000000.0,,,19467000000.0,"Yahoo Finance / yfinance (automated, unverified)",
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,verification_status,record_warnings
+AMZN,Amazon,2022-12-31,10189000000.0,Diluted Average Shares,10189000000.0,6000000000.0,Repurchase Of Capital Stock,19621000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,
+AMZN,Amazon,2023-12-31,10492000000.0,Diluted Average Shares,10304000000.0,0.0,Repurchase Of Capital Stock,24023000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,
+AMZN,Amazon,2024-12-31,10721000000.0,Diluted Average Shares,10473000000.0,0.0,Repurchase Of Capital Stock,22011000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,
+AMZN,Amazon,2025-12-31,10827000000.0,Diluted Average Shares,10656000000.0,,,19467000000.0,Yahoo Finance / yfinance,SEC Verified - Diluted Shares,

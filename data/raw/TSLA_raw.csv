@@ -1,5 +1,5 @@
-ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,record_warnings
-TSLA,Tesla,2022-12-31,3475000000,Verified SEC override,3130000000.0,,,1560000000.0,Manually entered / verified by user,Tesla FY2024 Form 10-K (SEC)
-TSLA,Tesla,2023-12-31,3485000000,Verified SEC override,3173500000.0,,,1812000000.0,Manually entered / verified by user,Tesla FY2024 Form 10-K (SEC)
-TSLA,Tesla,2024-12-31,3498000000,Verified SEC override,3216000000.0,,,1999000000.0,Manually entered / verified by user,Tesla FY2024 Form 10-K (SEC)
-TSLA,Tesla,2025-12-31,3528000000,Verified SEC override,3224750000.0,,,2825000000.0,Manually entered / verified by user,Tesla FY2025 Form 10-K (SEC)
+ticker,company,fiscal_year_end,diluted_avg_shares,diluted_shares_field_used,basic_avg_shares,repurchase_spend,repurchase_field_used,stock_based_comp,data_source,verification_status,record_warnings
+TSLA,Tesla,2022-12-31,3475000000,Verified SEC override,3130000000.0,,,1560000000.0,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares,Tesla FY2024 Form 10-K (SEC)
+TSLA,Tesla,2023-12-31,3485000000,Verified SEC override,3173500000.0,,,1812000000.0,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares,Tesla FY2024 Form 10-K (SEC)
+TSLA,Tesla,2024-12-31,3498000000,Verified SEC override,3216000000.0,,,1999000000.0,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares,Tesla FY2024 Form 10-K (SEC)
+TSLA,Tesla,2025-12-31,3528000000,Verified SEC override,3224750000.0,,,2825000000.0,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares,Tesla FY2025 Form 10-K (SEC)

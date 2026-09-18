@@ -30,7 +30,6 @@ from buyback_analyzer import (  # noqa: E402
     calculate_net_buyback_yield,
     classify_share_count_change,
     calculate_cumulative_share_change,
-    calculate_effectiveness_score,
     clean_financial_data,
     validate_data,
     compare_companies,
@@ -234,63 +233,6 @@ def test_cumulative_share_change_raises_on_insufficient_points():
     with pytest.raises(ValueError):
         calculate_cumulative_share_change(series)
 
-
-# ---------------------------------------------------------------------
-# 10. Score calculation
-# ---------------------------------------------------------------------
-def test_score_full_marks_for_strong_consistent_reduction():
-    score, breakdown = calculate_effectiveness_score(
-        cumulative_pct_change=-20.0,  # -20% share count change = 20% cumulative reduction -> full 40
-        years_reduction=3,
-        years_dilution=0,
-        total_years=3,
-        average_annual_yield_pct=6.0,  # >= 5% benchmark -> full 20
-    )
-    assert score == pytest.approx(100.0)
-    assert breakdown["cumulative_reduction_component_of_40"] == pytest.approx(40.0)
-    assert breakdown["consistency_component_of_25"] == pytest.approx(25.0)
-    assert breakdown["average_yield_component_of_20"] == pytest.approx(20.0)
-    assert breakdown["dilution_absence_component_of_15"] == pytest.approx(15.0)
-
-
-def test_score_zero_for_persistent_dilution():
-    score, breakdown = calculate_effectiveness_score(
-        cumulative_pct_change=20.0,  # share count grew 20% -> 0 reduction credit
-        years_reduction=0,
-        years_dilution=3,
-        total_years=3,
-        average_annual_yield_pct=-5.0,
-    )
-    assert score == pytest.approx(0.0)
-
-
-def test_score_high_yield_alone_does_not_guarantee_high_score():
-    # A single huge buyback year followed by dilutive years should NOT
-    # automatically score well overall -- consistency and cumulative
-    # change matter too, per the spec's explicit requirement.
-    score, _ = calculate_effectiveness_score(
-        cumulative_pct_change=5.0,  # net share count actually grew overall
-        years_reduction=1,
-        years_dilution=2,
-        total_years=3,
-        average_annual_yield_pct=15.0,  # one big outlier year
-    )
-    assert score is not None
-    assert score < 60.0  # should be held back despite a flashy average yield
-
-
-def test_score_none_when_no_cumulative_data():
-    score, breakdown = calculate_effectiveness_score(
-        cumulative_pct_change=None,
-        years_reduction=0,
-        years_dilution=0,
-        total_years=0,
-        average_annual_yield_pct=0.0,
-    )
-    assert score is None
-    assert breakdown is None
-
-
 # ---------------------------------------------------------------------
 # Additional integration-style tests using analyze_company's helper
 # pieces directly (clean_financial_data + validate_data + full company
@@ -349,8 +291,6 @@ def test_compare_companies_lists_insufficient_data_transparently():
         best_year={},
         worst_year={},
         overall_classification=ShareChangeStatus.NET_REDUCTION,
-        effectiveness_score=80.0,
-        score_breakdown={},
     )
     bad = CompanyAnalysis(
         ticker="BAD",
@@ -364,8 +304,6 @@ def test_compare_companies_lists_insufficient_data_transparently():
         best_year=None,
         worst_year=None,
         overall_classification=ShareChangeStatus.INSUFFICIENT_DATA,
-        effectiveness_score=None,
-        score_breakdown=None,
         data_quality_notes=["No data returned."],
         insufficient_data=True,
     )
@@ -376,9 +314,6 @@ def test_compare_companies_lists_insufficient_data_transparently():
     # rather than a Python bool, which is equal but not identical.
     assert bool(bad_row["Insufficient Data"]) == True  # noqa: E712
     assert "No data returned." in bad_row["Data Quality Notes"]
-    # Good company should rank above the insufficient-data one.
-    assert summary.iloc[0]["Ticker"] == "GOOD"
-
 
 # ---------------------------------------------------------------------
 # Regression tests for the second-round fixes:
@@ -388,12 +323,12 @@ def test_compare_companies_lists_insufficient_data_transparently():
 #   - "Purchase Of Business" must not be an accepted repurchase field
 # ---------------------------------------------------------------------
 def test_missing_middle_year_does_not_create_fake_comparison():
-    ds = _make_dataset("GAPCO", {"2021-12-31": 1000.0, "2023-12-31": 900.0})
+    ds = _make_dataset("GAPCO", {"2022-12-31": 1000.0, "2024-12-31": 900.0})
     # Manually insert a genuinely-missing middle year so clean_financial_data
     # sees three rows, one with a NaN share count, matching a real yfinance gap.
     ds.records.insert(
         1,
-        ba_module()._make_record("GAPCO", "2022-12-31", None),
+        ba_module()._make_record("GAPCO", "2023-12-31", None),
     )
     cleaned = ba_module().clean_financial_data(ds)
     analysis = ba_module().analyze_company("GAPCO", "GAPCO Inc.", dataset=ds)

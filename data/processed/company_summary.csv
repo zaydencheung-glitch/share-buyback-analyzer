@@ -1,0 +1,11 @@
+Ticker,Company,Fiscal Years Analyzed,Average Annual Net Share Reduction Yield %,Cumulative Diluted Share Count Change %,Years Net Reduction,Years Net Dilution,Years Neutral,Overall Classification,Insufficient Data,Data Quality Notes
+AAPL,Apple,3,2.7733,-8.0922,3,0,0,Net Share Reduction,False,
+AMZN,Amazon,3,-2.0484,6.2617,0,3,0,Net Dilution,False,
+COST,Costco,3,-0.0035,0.0103,0,0,3,Flat / Neutral,False,
+GOOGL,Alphabet,3,2.4086,-7.0598,3,0,0,Net Share Reduction,False,
+JPM,JPMorgan Chase,3,2.1568,-6.3468,3,0,0,Net Share Reduction,False,
+META,Meta Platforms,3,1.6008,-4.7372,3,0,0,Net Share Reduction,False,
+MSFT,Microsoft,3,0.3319,-0.9947,1,0,2,Net Share Reduction,False,
+NVDA,NVIDIA,3,0.7228,-2.1538,3,0,0,Net Share Reduction,False,
+PLTR,Palantir Technologies,3,-7.5551,24.2953,0,3,0,Net Dilution,False,
+TSLA,Tesla,3,-0.5061,1.5252,0,3,0,Net Dilution,False,

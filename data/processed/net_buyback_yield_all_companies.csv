@@ -1,31 +1,31 @@
-Company,Ticker,Fiscal Year,Diluted Average Shares,Previous Year Diluted Average Shares,Net Shares Retired,Net Share Reduction Yield %,Status,Data Source
-Apple,AAPL,2023-09-30,15812547000.0,16325819000.0,513272000.0,3.1439,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Apple,AAPL,2024-09-30,15408095000.0,15812547000.0,404452000.0,2.5578,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Apple,AAPL,2025-09-30,15004697000.0,15408095000.0,403398000.0,2.6181,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Microsoft,MSFT,2023-06-30,7472000000.0,7540000000.0,68000000.0,0.9019,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Microsoft,MSFT,2024-06-30,7469000000.0,7472000000.0,3000000.0,0.0401,Flat / Neutral,"Yahoo Finance / yfinance (automated, unverified)"
-Microsoft,MSFT,2025-06-30,7465000000.0,7469000000.0,4000000.0,0.0536,Flat / Neutral,"Yahoo Finance / yfinance (automated, unverified)"
-Meta Platforms,META,2023-12-31,2629000000.0,2702000000.0,73000000.0,2.7017,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Meta Platforms,META,2024-12-31,2614000000.0,2629000000.0,15000000.0,0.5706,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Meta Platforms,META,2025-12-31,2574000000.0,2614000000.0,40000000.0,1.5302,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Tesla,TSLA,2023-12-31,3485000000.0,3475000000.0,-10000000.0,-0.2878,Net Dilution,Manually entered / verified by user
-Tesla,TSLA,2024-12-31,3498000000.0,3485000000.0,-13000000.0,-0.373,Net Dilution,Manually entered / verified by user
-Tesla,TSLA,2025-12-31,3528000000.0,3498000000.0,-30000000.0,-0.8576,Net Dilution,Manually entered / verified by user
-Palantir Technologies,PLTR,2023-12-31,2297927000.0,2063793000.0,-234134000.0,-11.3448,Net Dilution,Manually entered / verified by user
-Palantir Technologies,PLTR,2024-12-31,2450818000.0,2297927000.0,-152891000.0,-6.6534,Net Dilution,Manually entered / verified by user
-Palantir Technologies,PLTR,2025-12-31,2565197000.0,2450818000.0,-114379000.0,-4.667,Net Dilution,Manually entered / verified by user
-Alphabet,GOOGL,2023-12-31,12722000000.0,13159000000.0,437000000.0,3.3209,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Alphabet,GOOGL,2024-12-31,12447000000.0,12722000000.0,275000000.0,2.1616,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Alphabet,GOOGL,2025-12-31,12230000000.0,12447000000.0,217000000.0,1.7434,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Amazon,AMZN,2023-12-31,10492000000.0,10189000000.0,-303000000.0,-2.9738,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
-Amazon,AMZN,2024-12-31,10721000000.0,10492000000.0,-229000000.0,-2.1826,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
-Amazon,AMZN,2025-12-31,10827000000.0,10721000000.0,-106000000.0,-0.9887,Net Dilution,"Yahoo Finance / yfinance (automated, unverified)"
-NVIDIA,NVDA,2023-01-31,25070000000.0,25350000000.0,280000000.0,1.1045,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-NVIDIA,NVDA,2024-01-31,24940000000.0,25070000000.0,130000000.0,0.5185,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-NVIDIA,NVDA,2025-01-31,24804000000.0,24940000000.0,136000000.0,0.5453,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-JPMorgan Chase,JPM,2023-12-31,2943100000.0,2970000000.0,26900000.0,0.9057,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-JPMorgan Chase,JPM,2024-12-31,2879000000.0,2943100000.0,64100000.0,2.178,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-JPMorgan Chase,JPM,2025-12-31,2781500000.0,2879000000.0,97500000.0,3.3866,Net Share Reduction,"Yahoo Finance / yfinance (automated, unverified)"
-Costco,COST,2023-08-31,444452000.0,444757000.0,305000.0,0.0686,Flat / Neutral,"Yahoo Finance / yfinance (automated, unverified)"
-Costco,COST,2024-08-31,444759000.0,444452000.0,-307000.0,-0.0691,Flat / Neutral,"Yahoo Finance / yfinance (automated, unverified)"
-Costco,COST,2025-08-31,444803000.0,444759000.0,-44000.0,-0.0099,Flat / Neutral,"Yahoo Finance / yfinance (automated, unverified)"
+Company,Ticker,Fiscal Year,Diluted Average Shares,Previous Year Diluted Average Shares,Net Shares Retired,Net Share Reduction Yield %,Status,Data Source,Verification Status
+Apple,AAPL,2023-09-30,15812547000.0,16325819000.0,513272000.0,3.1439,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Apple,AAPL,2024-09-30,15408095000.0,15812547000.0,404452000.0,2.5578,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Apple,AAPL,2025-09-30,15004697000.0,15408095000.0,403398000.0,2.6181,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Microsoft,MSFT,2023-06-30,7472000000.0,7540000000.0,68000000.0,0.9019,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Microsoft,MSFT,2024-06-30,7469000000.0,7472000000.0,3000000.0,0.0401,Flat / Neutral,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Microsoft,MSFT,2025-06-30,7465000000.0,7469000000.0,4000000.0,0.0536,Flat / Neutral,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Meta Platforms,META,2023-12-31,2629000000.0,2702000000.0,73000000.0,2.7017,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Meta Platforms,META,2024-12-31,2614000000.0,2629000000.0,15000000.0,0.5706,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Meta Platforms,META,2025-12-31,2574000000.0,2614000000.0,40000000.0,1.5302,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Tesla,TSLA,2023-12-31,3485000000.0,3475000000.0,-10000000.0,-0.2878,Net Dilution,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares
+Tesla,TSLA,2024-12-31,3498000000.0,3485000000.0,-13000000.0,-0.373,Net Dilution,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares
+Tesla,TSLA,2025-12-31,3528000000.0,3498000000.0,-30000000.0,-0.8576,Net Dilution,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares
+Palantir Technologies,PLTR,2023-12-31,2297927000.0,2063793000.0,-234134000.0,-11.3448,Net Dilution,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares
+Palantir Technologies,PLTR,2024-12-31,2450818000.0,2297927000.0,-152891000.0,-6.6534,Net Dilution,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares
+Palantir Technologies,PLTR,2025-12-31,2565197000.0,2450818000.0,-114379000.0,-4.667,Net Dilution,"SEC EDGAR filing (primary source, verified)",SEC Verified - Diluted Shares
+Alphabet,GOOGL,2023-12-31,12722000000.0,13159000000.0,437000000.0,3.3209,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Alphabet,GOOGL,2024-12-31,12447000000.0,12722000000.0,275000000.0,2.1616,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Alphabet,GOOGL,2025-12-31,12230000000.0,12447000000.0,217000000.0,1.7434,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Amazon,AMZN,2023-12-31,10492000000.0,10189000000.0,-303000000.0,-2.9738,Net Dilution,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Amazon,AMZN,2024-12-31,10721000000.0,10492000000.0,-229000000.0,-2.1826,Net Dilution,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Amazon,AMZN,2025-12-31,10827000000.0,10721000000.0,-106000000.0,-0.9887,Net Dilution,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+NVIDIA,NVDA,2023-01-31,25070000000.0,25350000000.0,280000000.0,1.1045,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+NVIDIA,NVDA,2024-01-31,24940000000.0,25070000000.0,130000000.0,0.5185,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+NVIDIA,NVDA,2025-01-31,24804000000.0,24940000000.0,136000000.0,0.5453,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+JPMorgan Chase,JPM,2023-12-31,2943100000.0,2970000000.0,26900000.0,0.9057,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+JPMorgan Chase,JPM,2024-12-31,2879000000.0,2943100000.0,64100000.0,2.178,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+JPMorgan Chase,JPM,2025-12-31,2781500000.0,2879000000.0,97500000.0,3.3866,Net Share Reduction,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Costco,COST,2023-08-31,444452000.0,444757000.0,305000.0,0.0686,Flat / Neutral,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Costco,COST,2024-08-31,444759000.0,444452000.0,-307000.0,-0.0691,Flat / Neutral,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
+Costco,COST,2025-08-31,444803000.0,444759000.0,-44000.0,-0.0099,Flat / Neutral,Yahoo Finance / yfinance,SEC Verified - Diluted Shares
