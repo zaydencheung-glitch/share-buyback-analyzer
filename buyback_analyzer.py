@@ -1129,7 +1129,7 @@ def main() -> None:
     print("=" * 70)
     print("SHARE BUYBACK ANALYZER")
     print("Research question: Are corporate share buybacks associated with lower")
-    print("diluted average share counts after the effects of issuance and dilution?")
+    print("diluted weighted-average share counts after the effects of issuance and dilution?")
     print("=" * 70)
 
     if not YFINANCE_AVAILABLE:
